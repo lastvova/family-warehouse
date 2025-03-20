@@ -8,6 +8,9 @@ import com.familywarehouse.users.mapper.UserMapper;
 import com.familywarehouse.users.repository.UserRepository;
 import com.familywarehouse.users.service.UserService;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -16,7 +19,7 @@ import java.util.Optional;
 @AllArgsConstructor
 public class UserServiceImpl implements UserService {
 
-//    private final PasswordEncoder passwordEncoder;
+    //    private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
 
     @Override
@@ -29,6 +32,13 @@ public class UserServiceImpl implements UserService {
         User toSave = UserMapper.toUser(userDto);
 //        toSave.setPassword(passwordEncoder.encode(userDto.getPassword()));
         userRepository.save(toSave);
+    }
+
+    @Override
+    public Page<UserDto> findAll(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return userRepository.findAll(pageable)
+                .map(UserMapper::toDto);
     }
 
     @Override

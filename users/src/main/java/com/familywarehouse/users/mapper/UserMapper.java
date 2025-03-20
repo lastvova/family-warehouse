@@ -21,12 +21,7 @@ public class UserMapper {
 
     public static User toUser(UserDto userDto) {
         User user = new User();
-        user.setEmail(userDto.getEmail());
-        user.setFirstName(userDto.getFirstName());
-        user.setLastName(userDto.getLastName());
-        user.setMobileNumber(userDto.getMobileNumber());
-        user.setPassword(userDto.getPassword());
-        return user;
+        return toUser(userDto, user);
     }
 
     public static User toUser(UserDto userDto, User user) {
