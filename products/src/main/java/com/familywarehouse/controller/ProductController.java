@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
 import lombok.AllArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
@@ -74,8 +75,8 @@ public class ProductController {
             description = "HTTP Status OK"
     )
     @GetMapping
-    public ResponseEntity<Page<ProductDto>> fetchAllProducts(@RequestParam(required = false, defaultValue = "0") int page,
-                                                             @RequestParam(required = false, defaultValue = "5") int size) {
+    public ResponseEntity<Page<ProductDto>> fetchAllProducts(@RequestParam(required = false, defaultValue = "0") @Min(0) int page,
+                                                             @RequestParam(required = false, defaultValue = "5") @Min(1) int size) {
         Page<ProductDto> allProducts = productService.getAllProducts(page, size);
         return ResponseEntity
                 .status(HttpStatus.OK)
